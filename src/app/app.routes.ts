@@ -2,15 +2,10 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-
-  {
     path: 'home',
     loadComponent: () =>
       import('./pages/home/home.page').then((m) => m.HomePage),
+    data: { title: 'Home' },
   },
   {
     path: 'settings',
@@ -29,10 +24,16 @@ export const routes: Routes = [
   },
   {
     path: 'live-stock',
-    loadComponent: () => import('./pages/live-stock/live-stock.page').then( m => m.LiveStockPage)
+    loadComponent: () =>
+      import('./pages/live-stock/live-stock.page').then((m) => m.LiveStockPage),
   },
   {
     path: 'fields',
-    loadComponent: () => import('./pages/fields/fields.page').then( m => m.FieldsPage)
+    loadComponent: () =>
+      import('./pages/fields/fields.page').then((m) => m.FieldsPage),
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
   },
 ];
