@@ -1,6 +1,7 @@
 {
-  "name": "ionic-app-base",
-  "app_id": "",
-  "type": "angular-standalone",
-  "integrations": {}
+  "name": "Livestock Manager App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
 }

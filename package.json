@@ -1,6 +1,6 @@
 {
-  "name": "livestock-managment-app",
-  "version": "0.0.0",
+  "name": "livestock-manager-app",
+  "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -9,9 +9,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint",
-    "ionic:build": "npm run build",
-    "ionic:serve": "npm run start -- --open"
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -23,16 +21,16 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
+    "@capacitor/app": "6.0.0",
+    "@capacitor/core": "6.1.0",
+    "@capacitor/haptics": "6.0.0",
+    "@capacitor/keyboard": "6.0.1",
+    "@capacitor/status-bar": "6.0.0",
     "@ionic/angular": "^8.0.0",
     "ionicons": "^7.2.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.2",
-    "@capacitor/app": "latest",
-    "@capacitor/core": "latest",
-    "@capacitor/keyboard": "latest",
-    "@capacitor/haptics": "latest",
-    "@capacitor/status-bar": "latest"
+    "zone.js": "~0.14.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.0",
@@ -44,6 +42,7 @@
     "@angular/cli": "^18.0.0",
     "@angular/compiler-cli": "^18.0.0",
     "@angular/language-service": "^18.0.0",
+    "@capacitor/cli": "6.1.0",
     "@ionic/angular-toolkit": "^11.0.1",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -59,7 +58,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.4.0",
-    "@capacitor/cli": "latest"
-  }
+    "typescript": "~5.4.0"
+  },
+  "description": "An Ionic project"
 }
