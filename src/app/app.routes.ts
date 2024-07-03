@@ -3,12 +3,36 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/inbox',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
+
   {
-    path: 'folder/:id',
+    path: 'home',
     loadComponent: () =>
-      import('./folder/folder.page').then((m) => m.FolderPage),
+      import('./pages/home/home.page').then((m) => m.HomePage),
+  },
+  {
+    path: 'settings',
+    loadComponent: () =>
+      import('./pages/settings/settings.page').then((m) => m.SettingsPage),
+  },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./pages/profile/profile.page').then((m) => m.ProfilePage),
+  },
+  {
+    path: 'support',
+    loadComponent: () =>
+      import('./pages/support/support.page').then((m) => m.SupportPage),
+  },
+  {
+    path: 'live-stock',
+    loadComponent: () => import('./pages/live-stock/live-stock.page').then( m => m.LiveStockPage)
+  },
+  {
+    path: 'fields',
+    loadComponent: () => import('./pages/fields/fields.page').then( m => m.FieldsPage)
   },
 ];
