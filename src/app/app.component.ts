@@ -1,6 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {
+  ActivatedRoute,
+  ActivationEnd,
+  NavigationStart,
+  Route,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
 import {
   IonApp,
   IonSplitPane,
@@ -23,6 +31,8 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {} from 'ionicons/icons';
+import { routeData } from './app.routes';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -53,8 +63,18 @@ import {} from 'ionicons/icons';
     IonMenuButton,
   ],
 })
-export class AppComponent {
-  constructor() {
+export class AppComponent implements OnInit {
+  activeRouteData: routeData | undefined;
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     addIcons({});
+
+    router.events.subscribe((event) => {
+      if (event instanceof ActivationEnd) {
+        this.activeRouteData = event.snapshot?.data as routeData;
+      }
+    });
   }
+
+  async ngOnInit() {}
 }

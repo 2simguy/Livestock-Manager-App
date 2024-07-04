@@ -1,6 +1,14 @@
-import { Routes } from '@angular/router';
+import { Route, Routes } from '@angular/router';
 
-export const routes: Routes = [
+export interface routeData {
+  title: string;
+}
+
+interface routesExtended extends Route {
+  data?: routeData;
+}
+
+export const routes: routesExtended[] = [
   {
     path: 'home',
     loadComponent: () =>
@@ -11,6 +19,7 @@ export const routes: Routes = [
     path: 'settings',
     loadComponent: () =>
       import('./pages/settings/settings.page').then((m) => m.SettingsPage),
+    data: { title: 'Settings' },
   },
   {
     path: 'profile',
