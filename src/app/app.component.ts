@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import {
   ActivatedRoute,
   ActivationEnd,
-  NavigationStart,
-  Route,
   Router,
   RouterLink,
   RouterLinkActive,
@@ -28,11 +26,20 @@ import {
   IonToolbar,
   IonButtons,
   IonMenuButton,
+  IonButton,
+  IonText,
+  IonCard,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import {} from 'ionicons/icons';
-import { routeData } from './app.routes';
-import { lastValueFrom } from 'rxjs';
+import {
+  homeOutline,
+  informationCircleOutline,
+  pawOutline,
+  personOutline,
+  settingsOutline,
+  squareOutline,
+} from 'ionicons/icons';
+import { routeData, routes } from './app.routes';
 
 @Component({
   selector: 'app-root',
@@ -40,6 +47,9 @@ import { lastValueFrom } from 'rxjs';
   styleUrls: ['app.component.scss'],
   standalone: true,
   imports: [
+    IonCard,
+    IonText,
+    IonButton,
     IonButtons,
     IonToolbar,
     IonHeader,
@@ -65,9 +75,19 @@ import { lastValueFrom } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   activeRouteData: routeData | undefined;
+  sideMenuListOrderer = routes
+    .filter((obj) => obj.data?.sideMenuOrder)
+    .sort((obj) => obj.data?.sideMenuOrder || 100);
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-    addIcons({});
+    addIcons({
+      homeOutline,
+      pawOutline,
+      squareOutline,
+      personOutline,
+      settingsOutline,
+      informationCircleOutline,
+    });
 
     router.events.subscribe((event) => {
       if (event instanceof ActivationEnd) {

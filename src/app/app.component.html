@@ -1,7 +1,31 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="push">
-      <ion-content> </ion-content>
+      <ion-content>
+        <div
+          style="
+            background-image: url(assets/img/side-menu-background.webp);
+            height: 100%;
+            padding-top: 50px;
+          "
+        >
+          <ion-card style="opacity: 0.75">
+            <ion-list>
+              <ion-list-header class="ion-text-center">
+                <ion-title>Livestock Manager</ion-title>
+              </ion-list-header>
+              @for (item of sideMenuListOrderer; track $index) {
+              <ion-item [routerLink]="item?.path">
+                <ion-icon slot="start" [name]="item?.data?.icon"></ion-icon>
+                <ion-label>
+                  {{ item?.data?.title }}
+                </ion-label>
+              </ion-item>
+              }
+            </ion-list>
+          </ion-card>
+        </div>
+      </ion-content>
     </ion-menu>
     <div class="ion-page" id="main-content">
       <ion-header>

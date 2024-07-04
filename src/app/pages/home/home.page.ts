@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   IonContent,
-  IonHeader,
+  IonCard,
   IonTitle,
   IonToolbar,
-  IonButton,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
 } from '@ionic/angular/standalone';
 import { RouterLink } from '@angular/router';
 
@@ -16,11 +18,12 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./home.page.scss'],
   standalone: true,
   imports: [
-    IonButton,
+    IonCardContent,
+    IonCardTitle,
+    IonCardHeader,
     IonContent,
-    IonHeader,
+    IonCard,
     IonTitle,
-    IonToolbar,
     CommonModule,
     FormsModule,
     RouterLink,
