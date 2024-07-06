@@ -1,1 +1,35 @@
-<ion-content> </ion-content>
+<ion-content>
+  <form [formGroup]="settingsForm">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Push Notifications</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-checkbox
+            labelPlacement="end"
+            justify="start"
+            formControlName="animalMissing"
+            >Missing animal notification</ion-checkbox
+          >
+        </ion-item>
+        <ion-item>
+          <ion-checkbox
+            labelPlacement="end"
+            justify="start"
+            formControlName="animalSick"
+            >Sick animal notification</ion-checkbox
+          >
+        </ion-item>
+        <ion-item>
+          <ion-checkbox
+            labelPlacement="end"
+            justify="start"
+            formControlName="animalDeath"
+            >Dead animal notification</ion-checkbox
+          >
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

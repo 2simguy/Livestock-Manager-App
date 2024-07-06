@@ -1,20 +1,57 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonCard,
+  IonCardSubtitle,
+  IonCardContent,
+  IonItem,
+  IonInput,
+  IonCardHeader,
+  IonLabel,
+  IonCheckbox,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [
+    IonCheckbox,
+    IonLabel,
+    IonCardHeader,
+    IonInput,
+    IonItem,
+    IonCardContent,
+    IonCardSubtitle,
+    IonCard,
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class SettingsPage implements OnInit {
+  settingsForm: FormGroup = this.formBuilder.group({
+    animalMissing: [false, []],
+    animalSick: [false, []],
+    animalDeath: [false, []],
+  });
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
