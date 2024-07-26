@@ -9,7 +9,13 @@ import {
   IonLabel,
   IonItem,
   IonInput,
+  IonCardSubtitle,
+  IonCardContent,
+  IonCardTitle,
+  IonCardHeader,
+  IonCard,
 } from '@ionic/angular/standalone';
+import { AvatarComponent } from '@components/avatar/avatar.component';
 
 @Component({
   selector: 'app-profile',
@@ -17,6 +23,11 @@ import {
   styleUrls: ['./profile.page.scss'],
   standalone: true,
   imports: [
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonCardSubtitle,
     IonInput,
     IonItem,
     IonLabel,
@@ -26,6 +37,7 @@ import {
     IonToolbar,
     CommonModule,
     FormsModule,
+    AvatarComponent,
   ],
 })
 export class ProfilePage implements OnInit {
