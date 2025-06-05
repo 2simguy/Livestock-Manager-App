@@ -1,7 +1,0 @@
-{
-  "name": "Livestock Manager App",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
