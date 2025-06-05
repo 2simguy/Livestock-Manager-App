@@ -15,4 +15,67 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
+/// Application Models
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
+  password String
+  farms    Farm[]
+  otp            String?
+  otpTimestamp   DateTime?
+}
+
+model Farm {
+  id        Int        @id @default(autoincrement())
+  name      String
+  location  String
+  users     User[]
+  livestock Livestock[]
+}
+
+model Livestock {
+  id            Int            @id @default(autoincrement())
+  tagNumber     String         @unique
+  species       String
+  breed         String
+  sex           String
+  dateOfBirth   DateTime
+  weight        Float
+  field         String
+  status        LivestockStatus
+  parentId      Int?
+  parent        Livestock?     @relation("ParentChild", fields: [parentId], references: [id])
+  children      Livestock[]    @relation("ParentChild")
+  farmId        Int
+  farm          Farm           @relation(fields: [farmId], references: [id])
+  treatments    Treatment[]
+  weightRecords WeightRecord[]
+  lastTreatment DateTime?
+}
+
+model Treatment {
+  id            Int       @id @default(autoincrement())
+  livestockId   Int
+  livestock     Livestock @relation(fields: [livestockId], references: [id])
+  date          DateTime
+  treatmentType String
+  notes         String?
+}
+
+model WeightRecord {
+  id          Int       @id @default(autoincrement())
+  livestockId Int
+  livestock   Livestock @relation(fields: [livestockId], references: [id])
+  date        DateTime
+  weightKg    Float
+}
+
+enum LivestockStatus {
+  Healthy
+  Under_Treatment
+  Deceased
+}
+
 
