@@ -15,4 +15,97 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
+/// Application Models
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
+  password String
+  farms    Farm[]
+  otp            String?
+  otpTimestamp   DateTime?
+}
+
+model Farm {
+  id        Int        @id @default(autoincrement())
+  name      String
+  location  String
+  users     User[]
+  fields    Field[]
+  livestock Livestock[]
+}
+
+model Livestock {
+  id            Int            @id @default(autoincrement())
+  tagNumber     String         @unique
+  speciesId     Int
+  species       Species        @relation(fields: [speciesId], references: [id])
+  breed         String
+  sex           Sex
+  dateOfBirth   DateTime
+  weight        Float
+  fieldId       Int?
+  field         Field?         @relation(fields: [fieldId], references: [id])
+  status        LivestockStatus
+  fatherId      Int?
+  father        Livestock?     @relation("Father", fields: [fatherId], references: [id])
+  motherId      Int?
+  mother        Livestock?     @relation("Mother", fields: [motherId], references: [id])
+  fatherChildren Livestock[]   @relation("Father")
+  motherChildren Livestock[]   @relation("Mother")
+  farmId        Int
+  farm          Farm           @relation(fields: [farmId], references: [id])
+  treatments    Treatment[]
+  weightRecords WeightRecord[]
+  lastTreatment DateTime?
+}
+
+model Treatment {
+  id            Int       @id @default(autoincrement())
+  livestockId   Int
+  livestock     Livestock @relation(fields: [livestockId], references: [id])
+  date          DateTime
+  treatmentType String
+  notes         String?
+}
+
+model WeightRecord {
+  id          Int       @id @default(autoincrement())
+  livestockId Int
+  livestock   Livestock @relation(fields: [livestockId], references: [id])
+  date        DateTime
+  weightKg    Float
+}
+
+enum LivestockStatus {
+  Healthy
+  Under_Treatment
+  Deceased
+  Sick
+}
+
+enum Sex {
+  Male
+  Female
+  Unknown
+}
+
+model Species {
+  id        Int         @id @default(autoincrement())
+  name      String
+  livestock Livestock[]
+}
+
+model Field {
+  id          Int         @id @default(autoincrement())
+  name        String
+  location    String?
+  latitude    Float?
+  longitude   Float?
+  farmId      Int
+  farm        Farm        @relation(fields: [farmId], references: [id])
+  livestock   Livestock[]
+}
+
 
