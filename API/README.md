@@ -84,3 +84,11 @@ Launches Prisma Studio, a web-based GUI to view and edit your database content.
 ```bash
 $ npm run prisma:studio
 ```
+
+### Reset Prisma DB
+
+CAREFUL!!! Resets the whole DB. For dev DB only.
+
+```bash
+$ npx prisma migrate reset
+```

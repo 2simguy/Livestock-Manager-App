@@ -1,4 +1,4 @@
-import { PrismaClient, Sex, LivestockStatus } from '@prisma/client';
+import { PrismaClient, Sex, LivestockStatus } from '../generated/prisma';
 
 const prisma = new PrismaClient();
 
@@ -20,6 +20,7 @@ async function main() {
   // Seed users with farms and fields
   const users = await Promise.all(
     [
+      { name: 'Demo', email: 'demo@demo.com', password: 'demo' },
       { name: 'Alice', email: 'alice@example.com', password: 'password1' },
       { name: 'Bob', email: 'bob@example.com', password: 'password2' },
       { name: 'Carol', email: 'carol@example.com', password: 'password3' },
@@ -57,7 +58,7 @@ async function main() {
       });
 
       return user;
-    })
+    }),
   );
 
   const fields = await prisma.field.findMany();
@@ -78,8 +79,7 @@ async function main() {
         speciesId: species.id,
         breed: species.name + ' Breed',
         sex,
-        dateOfBirth: new Date(2024, (i % 12), 1 + (i % 28)),
-        weight: 100 + i * 10,
+        dateOfBirth: new Date(2024, i % 12, 1 + (i % 28)),
         fieldId: field.id,
         status: LivestockStatus.Healthy,
         farmId: farm.id,
@@ -126,4 +126,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-

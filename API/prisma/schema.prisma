@@ -10,27 +10,27 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlserver"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  directUrl = env("DATABASE_DIRECT_URL")
 }
 
 /// Application Models
 
 model User {
-  id       Int      @id @default(autoincrement())
-  name     String
-  email    String   @unique
-  password String
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(100)      // 100 is typical for names
+  email    String @unique @db.VarChar(255) // 255 is standard for emails
+  password String @db.VarChar(255)      // 255 for hashed passwords
   farms    Farm[]
-  otp            String?
+  otp            String? @db.VarChar(10)    // 6-10 chars for OTPs
   otpTimestamp   DateTime?
 }
 
 model Farm {
   id        Int        @id @default(autoincrement())
-  name      String
-  location  String
+ name      String     @db.VarChar(100)
+  location  String?    @db.VarChar(255) // 255 for addresses
   users     User[]
   fields    Field[]
   livestock Livestock[]
@@ -38,24 +38,24 @@ model Farm {
 
 model Livestock {
   id            Int            @id @default(autoincrement())
-  tagNumber     String         @unique
-  speciesId     Int
-  species       Species        @relation(fields: [speciesId], references: [id])
-  breed         String
-  sex           Sex
-  dateOfBirth   DateTime
-  weight        Float
+  name     String?         @db.VarChar(100)
+  tagNumber     String         @unique @db.VarChar(50) // Tag numbers are usually short
+  speciesId     Int?          
+  species       Species?        @relation(fields: [speciesId], references: [id])
+  breed         String? @db.VarChar(100)
+  sex           Sex?
+  dateOfBirth   DateTime?
   fieldId       Int?
-  field         Field?         @relation(fields: [fieldId], references: [id])
+  field         Field?         @relation(fields: [fieldId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   status        LivestockStatus
   fatherId      Int?
-  father        Livestock?     @relation("Father", fields: [fatherId], references: [id])
+  father        Livestock?     @relation("Father", fields: [fatherId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   motherId      Int?
-  mother        Livestock?     @relation("Mother", fields: [motherId], references: [id])
+  mother        Livestock?     @relation("Mother", fields: [motherId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   fatherChildren Livestock[]   @relation("Father")
   motherChildren Livestock[]   @relation("Mother")
   farmId        Int
-  farm          Farm           @relation(fields: [farmId], references: [id])
+  farm          Farm           @relation(fields: [farmId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   treatments    Treatment[]
   weightRecords WeightRecord[]
   lastTreatment DateTime?
@@ -64,16 +64,16 @@ model Livestock {
 model Treatment {
   id            Int       @id @default(autoincrement())
   livestockId   Int
-  livestock     Livestock @relation(fields: [livestockId], references: [id])
+  livestock     Livestock @relation(fields: [livestockId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   date          DateTime
-  treatmentType String
-  notes         String?
+  treatmentType String    @db.VarChar(100)
+  notes         String?   @db.VarChar(2000)
 }
 
 model WeightRecord {
   id          Int       @id @default(autoincrement())
   livestockId Int
-  livestock   Livestock @relation(fields: [livestockId], references: [id])
+  livestock   Livestock @relation(fields: [livestockId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   date        DateTime
   weightKg    Float
 }
@@ -93,19 +93,17 @@ enum Sex {
 
 model Species {
   id        Int         @id @default(autoincrement())
-  name      String
+  name      String      @db.VarChar(100)
   livestock Livestock[]
 }
 
 model Field {
   id          Int         @id @default(autoincrement())
-  name        String
-  location    String?
+  name        String      @db.VarChar(100)
+  location    String?     @db.VarChar(255)
   latitude    Float?
   longitude   Float?
   farmId      Int
-  farm        Farm        @relation(fields: [farmId], references: [id])
+  farm        Farm        @relation(fields: [farmId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   livestock   Livestock[]
 }
-
-
