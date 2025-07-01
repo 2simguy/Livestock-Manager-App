@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { ForgotPasswordDto } from './dto/forgot-password';
+import { ResetOtpDto } from './dto/reset-otp.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -10,16 +11,21 @@ export class AuthController {
 
   @Post('register')
   register(@Body() registerDto: RegisterDto) {
-    // ToDo
+    return this.authService.register(registerDto);
   }
 
   @Post('sign-in')
   signIn(@Body() signInDto: SignInDto) {
-    // ToDo
+    return this.authService.login(signInDto.email, signInDto.password);
   }
 
   @Post('forgot-password')
   forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
-    // ToDo
+    return this.authService.forgotPassword(forgotPasswordDto.email);
+  }
+
+  @Post('reset-otp')
+  resetOtp(@Body() dto: ResetOtpDto) {
+    return this.authService.resetOtp(dto.email, dto.otp, dto.password);
   }
 }
